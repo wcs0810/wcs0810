@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="王传淞的《高级网页设计》课堂实践目录">
+    <title>王传淞｜高级网页设计课堂实践</title>
+    <style>
+        :root {
+            --ink: #17202a;
+            --muted: #65727d;
+            --paper: #f6f3ed;
+            --card: rgba(255, 255, 255, 0.82);
+            --line: #d9d3c8;
+            --blue: #2364aa;
+            --blue-dark: #164574;
+            --orange: #e77645;
+            --shadow: 0 18px 45px rgba(33, 50, 68, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            background: var(--paper);
+            background-image: linear-gradient(135deg, rgba(35, 100, 170, 0.07) 0 1px, transparent 1px 100%), linear-gradient(45deg, rgba(231, 118, 69, 0.05) 0 1px, transparent 1px 100%);
+            background-size: 28px 28px;
+        }
+
+        .page-shell {
+            width: min(1120px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        header {
+            min-height: 72vh;
+            display: flex;
+            align-items: center;
+            padding: 76px 0 64px;
+            position: relative;
+        }
+
+        header::after {
+            content: "01";
+            position: absolute;
+            right: 0;
+            bottom: 30px;
+            color: rgba(35, 100, 170, 0.12);
+            font-size: clamp(7rem, 20vw, 15rem);
+            font-weight: 800;
+            line-height: 0.8;
+            letter-spacing: 0;
+            pointer-events: none;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--blue);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 32px;
+            height: 3px;
+            background: var(--orange);
+        }
+
+        .student-name {
+            margin-top: 24px;
+            color: var(--orange);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+        }
+
+        h1 {
+            max-width: 760px;
+            margin: 20px 0 22px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3rem, 8vw, 6.8rem);
+            font-weight: 700;
+            letter-spacing: 0;
+            line-height: 0.98;
+        }
+
+        h1 span {
+            color: var(--blue);
+            display: block;
+        }
+
+        .intro {
+            max-width: 600px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 34px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 20px;
+            border: 1px solid var(--blue);
+            color: white;
+            background: var(--blue);
+            font-size: 0.94rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+        }
+
+        .button:hover,
+        .button:focus-visible {
+            background: var(--blue-dark);
+            box-shadow: 0 8px 20px rgba(35, 100, 170, 0.22);
+            transform: translateY(-2px);
+        }
+
+        .button.secondary {
+            color: var(--blue-dark);
+            background: transparent;
+            border-color: var(--line);
+        }
+
+        main {
+            padding-bottom: 90px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 16px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .module-card {
+            min-height: 255px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 28px;
+            background: var(--card);
+            border: 1px solid rgba(217, 211, 200, 0.9);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+            transition: transform 180ms ease, border-color 180ms ease;
+        }
+
+        .module-card:hover {
+            border-color: var(--blue);
+            transform: translateY(-4px);
+        }
+
+        .module-number {
+            color: var(--orange);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .module-card h3 {
+            margin: 22px 0 8px;
+            font-size: 1.45rem;
+        }
+
+        .module-card p {
+            min-height: 52px;
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 22px;
+            color: var(--blue);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .card-link::after {
+            content: "→";
+            font-size: 1.2rem;
+            transition: transform 180ms ease;
+        }
+
+        .card-link:hover::after {
+            transform: translateX(5px);
+        }
+
+        .upcoming {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .upcoming-panel,
+        .prompt-panel {
+            padding: 28px;
+            border: 1px dashed #b9b1a4;
+            background: rgba(255, 255, 255, 0.42);
+        }
+
+        .upcoming-panel h3,
+        .prompt-panel h3 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .upcoming-panel p,
+        .prompt-panel p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .prompt-panel {
+            border-style: solid;
+            border-color: rgba(35, 100, 170, 0.28);
+            background: rgba(229, 238, 247, 0.6);
+        }
+
+        .prompt-text {
+            margin-top: 15px !important;
+            color: var(--ink) !important;
+            font-size: 0.92rem;
+        }
+
+        footer {
+            padding: 22px 0 30px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .fade-in {
+            animation: rise 650ms ease both;
+        }
+
+        .delay {
+            animation-delay: 130ms;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 720px) {
+            .page-shell {
+                width: min(100% - 28px, 560px);
+            }
+
+            header {
+                min-height: 78vh;
+                padding: 54px 0 48px;
+            }
+
+            header::after {
+                right: -10px;
+                bottom: 15px;
+                font-size: 8rem;
+            }
+
+            h1 {
+                font-size: clamp(2.8rem, 15vw, 5rem);
+            }
+
+            .module-grid,
+            .upcoming {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading {
+                display: block;
+            }
+
+            .section-heading p {
+                margin-top: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-shell">
+        <header class="fade-in">
+            <div>
+                <div class="eyebrow">Classroom practice · 2026</div>
+                <div class="student-name">王传淞</div>
+                <h1>高级网页设计<span>课堂实践</span></h1>
+                <p class="intro">这里是王传淞的课堂作品目录。用原生 HTML、CSS 与 JavaScript 记录从基础标签到完整网页的学习过程，让每一次练习都成为下一次创作的起点。</p>
+                <div class="hero-actions">
+                    <a class="button" href="#catalog">查看课堂目录 <span aria-hidden="true">↓</span></a>
+                    <a class="button secondary" href="HTML_basic_001.html">打开当前作品 <span aria-hidden="true">↗</span></a>
+                </div>
+            </div>
+        </header>
+
+        <main id="catalog">
+            <section class="fade-in delay" aria-labelledby="catalog-title">
+                <div class="section-heading">
+                    <h2 id="catalog-title">课堂目录</h2>
+                    <p>当前目录：2 个课堂入口</p>
+                </div>
+
+                <div class="module-grid">
+                    <article class="module-card">
+                        <div>
+                            <div class="module-number">01 / FOUNDATIONS</div>
+                            <h3>HTML 基础</h3>
+                            <p>标题、段落、链接、图片、列表、表格、区块、语义化标签与基础表单。</p>
+                        </div>
+                        <a class="card-link" href="HTML_basic_001.html">进入 HTML 基础网页</a>
+                    </article>
+
+                    <article class="module-card">
+                        <div>
+                            <div class="module-number">02 / ABOUT ME</div>
+                            <h3>自我介绍网页</h3>
+                            <p>通过个人信息、学习经历、兴趣爱好和未来规划，练习内容组织与网页表达。</p>
+                        </div>
+                        <a class="card-link" href="HTML_basic_001.html">查看自我介绍内容</a>
+                    </article>
+                </div>
+
+                <div class="upcoming">
+                    <div class="upcoming-panel">
+                        <h3>后续模块</h3>
+                        <p>CSS 页面美化、网页布局、响应式设计、JavaScript 交互等内容将在课堂实践中持续增加。</p>
+                    </div>
+                    <div class="prompt-panel">
+                        <h3>本次页面提示词</h3>
+                        <p class="prompt-text">创建一个新页面，包括本目录下的所有网页的超链接，使用原生代码，不使用cdn，新页面名称为index.html，主题为王传淞的《高级网页设计》课堂实践，美化页面，课堂目录中包含HTML基础、自我介绍网页、其余模块后续在增加。页面中包括本提示词。</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            王传淞 · 《高级网页设计》课堂实践目录
+        </footer>
+    </div>
+</body>
+
+</html>

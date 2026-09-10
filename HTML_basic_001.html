@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--英文叹号回车  -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的第一个网页</title>
+    <link rel="stylesheet" href="./html_basic.css">
+     
+</head>
+
+<body>
+    <h2 class="title-demo">1.标题</h2>
+    <!-- 一共6级标题h1-h6 -->
+  <h1>自我介绍</h1>
+<h2>基本信息</h2>
+<h3>学习经历</h3>
+<h4>竞赛经历</h4>
+<h5>个人爱好</h5>
+<h6>未来规划</h6>
+    <h2 class="title-demo">2.段落</h2>
+    <p>大家好，我叫王传淞，是大连东软信息学院计算机科学与技术专业计科24008班的学生。我热爱计算机技术，主动参与学科竞赛，持续打磨编程与工程实践能力。</p>
+<p>在校期间，我不断夯实C语言、Python、计算机网络、离散数学等专业基础，积极参与科创项目，锻炼团队协作和问题解决能力。</p>
+    <hr>
+    <h2 class="title-demo">3.超链接和图片</h2>
+    <a href="http://baidu.com" target="_blank">百度</a>
+    <img src="./img/1.jpg" alt="百度logo">
+    <h2 class="title-demo">4.列表</h2>
+    <h3>我喜欢做的事情</h3>
+    <ul class="list-demo" >
+        <li>打游戏</li>
+        <li>打瓦</li>
+        <li>看小说</li>
+    </ul>
+   <p>获奖经历</p>
+<ul>
+    <li>程序设计大赛AI赛道二等奖</li>
+    <li>华为ICT大赛省级二等奖</li>
+    <li>BETT杯英语竞赛全国一等奖</li>
+</ul>
+    <h2 class="title-demo">5.表格</h2>
+    <!-- cellspacing是单元格之间的距离，
+     cellpadding="3"是单元格内容与边框之间的距离 -->
+    <table id="user-table" border="2" cellspacing="0" cellpadding="3">
+        <caption>用户信息表</caption>
+        <!-- （tr>td*3）*4回车 实现的是三行四列的表格 -->
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>学校班级</th>
+        </tr>
+        <tr>
+        <td>王传淞</td>
+        <td>20</td>
+        <td>男</td>
+        <td>大连东软 计科24008</td>
+    </tr>
+    </table>
+    <h2 class="title-demo">6.div块级元素</h2>
+    <div>
+
+        <p>div特点1：独占一整行，自动前后换行，是块级元素</p>
+        <p>div特点2：可以嵌套任意标签（标题、段落、图片、列表都能放）</p>
+    </div>
+    <div>
+        <p>div特点1：独占一整行，自动前后换行，是块级元素</p>
+        <p>div特点2：可以嵌套任意标签（标题、段落、图片、列表都能放）</p>
+    </div>
+    <h2 class="title-demo">H5语义</h2>
+    <!-- header、nav、section、article、footer、aside本质上都是div -->
+    <header>头部</header>
+    <nav>导航条</nav>
+    <section>内容区域</section>
+    <article>文章区域</article>
+    <footer>页脚</footer>
+    <aside>侧边栏</aside>
+    <h2 class="title-demo"  >基础表单+H5表单</h2>
+
+    <form action="http://baidu.com" name="fm" method="post">
+        <p>用户名：
+            <input type="text" placeholder="请输入用户名" required>
+        </p>
+        <p>
+            <label for="pwd">密码：</label>
+            <!-- label的for属性对应input的id属性，
+             点击label标签，会自动聚焦到input输入框 -->
+            <input type="password" name="pwd" id="pwd">
+        </p>
+        <!-- h5出现的内容 -->
+        <p>邮箱：
+            <input type="email" name="email" id="email">
+        </p>
+        <p>
+            请上传文件：
+            <input type="file" name="file" id="file" multiple>
+            </input>
+        </p>
+        <p>
+            性别：
+            <input type="radio" name="gender" value="f">女
+            <input type="radio" name="gender" value="m">男
+        </p>
+        <p>
+            爱好：
+            <input type="checkbox" name="hobby" value="c"> croding </input>
+            <input type="checkbox" name="hobby" value="s"> playing</input>
+             <input type="checkbox" name="hobby" value="r"> reading</input>
+           
+        </p>
+        <p>
+            自我介绍：
+            <textarea name="intro" id="intro" cols="30" rows="10"></textarea>
+        </p>
+        <p>
+            籍贯：
+            <select name="city" id="city">
+                <option value="beijing">北京</option>
+                <option value="shanghai">上海</option>
+                <option value="guangzhou">广州</option>
+            </select>
+
+        </p>
+        <p>
+            <input type="submit" value="提交">
+            <input type="reset" value="重置">
+            <input type="button" value="取消"></input>
+        </p>
+            </input>
+        </p>
+
+    </form>
+    <button class="btn">
+        表单外的按钮 
+    </button>
+
+
+</body>
+
+</html>
