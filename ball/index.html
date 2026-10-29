@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网页抓小球训练 · v2 Aim Lab 风格</title>
+  <link rel="stylesheet" href="css/style.css?v=2">
+</head>
+<body>
+  <!-- v2 实时统计面板 -->
+  <div id="scoreboard">
+    <div class="stat-item">⏱ <span id="timeText">60</span>s</div>
+    <div class="stat-item">得分 <span id="scoreText">0</span></div>
+    <div class="stat-item">命中 <span id="hitText">0/0</span></div>
+    <div class="stat-item">准确 <span id="accText">--%</span></div>
+    <div class="stat-item">反应 <span id="rtText">--ms</span></div>
+    <div class="stat-item">偏差 <span id="devText">--px</span></div>
+    <div class="stat-item">Lv.<span id="levelText">1</span></div>
+    <button id="muteBtn" title="切换音效">🔊</button>
+  </div>
+
+  <button id="startBtn">开始游戏</button>
+  <div id="game"></div>
+
+  <script src="js/main.js?v=2"></script>
+</body>
+</html>

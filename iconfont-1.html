@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Awesome 字体图标展示 - iconfont-1</title>
+    <link rel="stylesheet" href="cdn/fontawesome/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wcs810-ink: #1a1a2e;
+            --wcs810-paper: #faf9f6;
+            --wcs810-accent: #c9a227;
+            --wcs810-muted: #6b7280;
+            --wcs810-border: #e5e2db;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--wcs810-paper);
+            color: var(--wcs810-ink);
+            min-height: 100vh;
+        }
+
+        .wcs810_layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 左侧导航 */
+        .wcs810_sidebar {
+            width: 240px;
+            background: var(--wcs810-ink);
+            color: var(--wcs810-paper);
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+        }
+
+        .wcs810_logo {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .wcs810_logo i {
+            color: var(--wcs810-accent);
+            margin-right: 8px;
+        }
+
+        .wcs810_tagline {
+            font-size: 0.8em;
+            color: var(--wcs810-muted);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .wcs810_nav-label {
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--wcs810-muted);
+            margin-bottom: 12px;
+        }
+
+        .wcs810_nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            color: var(--wcs810-paper);
+            text-decoration: none;
+            font-size: 0.9em;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .wcs810_nav-item:hover,
+        .wcs810_nav-item.wcs810_active {
+            border-left-color: var(--wcs810-accent);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .wcs810_nav-item i {
+            width: 18px;
+            text-align: center;
+            font-size: 0.85em;
+        }
+
+        .wcs810_sidebar-footer {
+            margin-top: auto;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75em;
+            color: var(--wcs810-muted);
+            line-height: 1.8;
+        }
+
+        /* 主内容区 */
+        .wcs810_main {
+            flex: 1;
+            margin-left: 240px;
+            padding: 48px 56px;
+            max-width: 1200px;
+        }
+
+        .wcs810_breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            color: var(--wcs810-muted);
+            margin-bottom: 32px;
+        }
+
+        .wcs810_breadcrumb a {
+            color: var(--wcs810-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .wcs810_breadcrumb a:hover {
+            color: var(--wcs810-accent);
+        }
+
+        .wcs810_hero {
+            margin-bottom: 48px;
+        }
+
+        .wcs810_hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 3.2em;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .wcs810_hero h1 em {
+            font-style: normal;
+            color: var(--wcs810-accent);
+        }
+
+        .wcs810_hero-desc {
+            font-size: 1.1em;
+            color: var(--wcs810-muted);
+            line-height: 1.8;
+            max-width: 560px;
+        }
+
+        /* 图标画廊 */
+        .wcs810_gallery {
+            margin-bottom: 56px;
+        }
+
+        .wcs810_gallery-header {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--wcs810-border);
+        }
+
+        .wcs810_gallery-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.6em;
+            font-weight: 600;
+        }
+
+        .wcs810_gallery-count {
+            font-size: 0.85em;
+            color: var(--wcs810-muted);
+        }
+
+        .wcs810_gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1px;
+            background: var(--wcs810-border);
+            border: 1px solid var(--wcs810-border);
+        }
+
+        .wcs810_icon-cell {
+            background: var(--wcs810-paper);
+            padding: 32px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .wcs810_icon-cell:hover {
+            background: var(--wcs810-ink);
+        }
+
+        .wcs810_icon-cell:hover i {
+            color: var(--wcs810-accent);
+        }
+
+        .wcs810_icon-cell:hover .wcs810_icon-label {
+            color: var(--wcs810-paper);
+        }
+
+        .wcs810_icon-cell i {
+            font-size: 2em;
+            color: var(--wcs810-ink);
+            margin-bottom: 12px;
+            transition: color 0.2s;
+        }
+
+        .wcs810_icon-label {
+            font-size: 0.75em;
+            color: var(--wcs810-muted);
+            text-align: center;
+            transition: color 0.2s;
+        }
+
+        /* 页脚 */
+        .wcs810_footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--wcs810-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85em;
+            color: var(--wcs810-muted);
+        }
+
+        .wcs810_footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .wcs810_footer-links a {
+            color: var(--wcs810-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .wcs810_footer-links a:hover {
+            color: var(--wcs810-accent);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .wcs810_sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 24px;
+            }
+
+            .wcs810_main {
+                margin-left: 0;
+                padding: 32px 24px;
+            }
+
+            .wcs810_hero h1 {
+                font-size: 2em;
+            }
+
+            .wcs810_layout {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wcs810_layout">
+        <!-- 左侧导航 -->
+        <aside class="wcs810_sidebar">
+            <div class="wcs810_logo">
+                <i class="fa-solid fa-font-awesome"></i> Font Awesome
+            </div>
+            <p class="wcs810_tagline">经典图标库 · 字体图标方式展示</p>
+
+            <div class="wcs810_nav-label">图标分类</div>
+            <a href="#solid" class="wcs810_nav-item wcs810_active">
+                <i class="fa-solid fa-shapes"></i> 实心图标
+            </a>
+            <a href="#regular" class="wcs810_nav-item">
+                <i class="fa-regular fa-circle"></i> 常规图标
+            </a>
+            <a href="#brands" class="wcs810_nav-item">
+                <i class="fa-brands fa-app-store"></i> 品牌图标
+            </a>
+
+            <div class="wcs810_nav-label" style="margin-top: 32px;">导航</div>
+            <a href="index.html" class="wcs810_nav-item">
+                <i class="fa-solid fa-house"></i> 返回首页
+            </a>
+            <a href="iconfont-2.html" class="wcs810_nav-item">
+                <i class="fa-solid fa-arrow-right"></i> Lucide 图标
+            </a>
+
+            <div class="wcs810_sidebar-footer">
+                Font Awesome Free v6.5.2<br>
+                资源本地化 · cdn/fontawesome
+            </div>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="wcs810_main">
+            <nav class="wcs810_breadcrumb">
+                <a href="index.html"><i class="fa-solid fa-house"></i> 首页</a>
+                <i class="fa-solid fa-chevron-right" style="font-size: 0.6em;"></i>
+                <span>Font Awesome 图标</span>
+            </nav>
+
+            <section class="wcs810_hero">
+                <h1>字体图标的<br><em>经典与优雅</em></h1>
+                <p class="wcs810_hero-desc">
+                    Font Awesome 作为最经典的图标库，以字体形式提供丰富的矢量图标。
+                    本页面采用 @font-face 方式加载，所有资源已本地化，确保离线可用。
+                </p>
+            </section>
+
+            <!-- 实心图标 -->
+            <section class="wcs810_gallery" id="solid">
+                <div class="wcs810_gallery-header">
+                    <h2 class="wcs810_gallery-title">实心图标</h2>
+                    <span class="wcs810_gallery-count">Solid · 12 icons</span>
+                </div>
+                <div class="wcs810_gallery-grid">
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-house"></i><span class="wcs810_icon-label">house</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-user"></i><span class="wcs810_icon-label">user</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-heart"></i><span class="wcs810_icon-label">heart</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-star"></i><span class="wcs810_icon-label">star</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-bell"></i><span class="wcs810_icon-label">bell</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-gear"></i><span class="wcs810_icon-label">gear</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-envelope"></i><span class="wcs810_icon-label">envelope</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-magnifying-glass"></i><span class="wcs810_icon-label">search</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-cart-shopping"></i><span class="wcs810_icon-label">cart</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-camera"></i><span class="wcs810_icon-label">camera</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-music"></i><span class="wcs810_icon-label">music</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-solid fa-film"></i><span class="wcs810_icon-label">film</span></div>
+                </div>
+            </section>
+
+            <!-- 常规图标 -->
+            <section class="wcs810_gallery" id="regular">
+                <div class="wcs810_gallery-header">
+                    <h2 class="wcs810_gallery-title">常规图标</h2>
+                    <span class="wcs810_gallery-count">Regular · 8 icons</span>
+                </div>
+                <div class="wcs810_gallery-grid">
+                    <div class="wcs810_icon-cell"><i class="fa-regular fa-heart"></i><span class="wcs810_icon-label">heart</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-regular fa-star"></i><span class="wcs810_icon-label">star</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-regular fa-bell"></i><span class="wcs810_icon-label">bell</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-regular fa-envelope"></i><span class="wcs810_icon-label">envelope</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-regular fa-user"></i><span class="wcs810_icon-label">user</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-regular fa-bookmark"></i><span class="wcs810_icon-label">bookmark</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-regular fa-calendar"></i><span class="wcs810_icon-label">calendar</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-regular fa-file"></i><span class="wcs810_icon-label">file</span></div>
+                </div>
+            </section>
+
+            <!-- 品牌图标 -->
+            <section class="wcs810_gallery" id="brands">
+                <div class="wcs810_gallery-header">
+                    <h2 class="wcs810_gallery-title">品牌图标</h2>
+                    <span class="wcs810_gallery-count">Brands · 10 icons</span>
+                </div>
+                <div class="wcs810_gallery-grid">
+                    <div class="wcs810_icon-cell"><i class="fa-brands fa-github"></i><span class="wcs810_icon-label">github</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-brands fa-twitter"></i><span class="wcs810_icon-label">twitter</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-brands fa-facebook"></i><span class="wcs810_icon-label">facebook</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-brands fa-google"></i><span class="wcs810_icon-label">google</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-brands fa-react"></i><span class="wcs810_icon-label">react</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-brands fa-vuejs"></i><span class="wcs810_icon-label">vuejs</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-brands fa-node-js"></i><span class="wcs810_icon-label">node</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-brands fa-html5"></i><span class="wcs810_icon-label">html5</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-brands fa-css3-alt"></i><span class="wcs810_icon-label">css3</span></div>
+                    <div class="wcs810_icon-cell"><i class="fa-brands fa-js"></i><span class="wcs810_icon-label">js</span></div>
+                </div>
+            </section>
+
+            <footer class="wcs810_footer">
+                <span>Font Awesome Free v6.5.2 · @font-face 方式</span>
+                <div class="wcs810_footer-links">
+                    <a href="index.html">首页</a>
+                    <a href="iconfont-2.html">Lucide 图标 →</a>
+                </div>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学生成绩分析面板 · 等级一（起始模板）</title>
+<style>
+  /* 样式与 target.html 保持一致，方便一比一对照还原 */
+  :root{
+    --bg-1:#1a1c2c; --bg-2:#243b55;
+    --card:#ffffff; --card-soft:rgba(255,255,255,.92);
+    --ink:#1f2733; --ink-soft:#5b6472; --line:#e7eaf0;
+    --primary:#5b7cfa; --primary-d:#3f5fd9;
+    --accent:#21d4b4; --warn:#ff7a59; --gold:#f5b945; --rose:#ff5d8f;
+    --radius:14px; --shadow:0 10px 30px rgba(20,28,48,.18);
+    --shadow-sm:0 4px 14px rgba(20,28,48,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+    background:linear-gradient(135deg,var(--bg-1),var(--bg-2));min-height:100vh;color:var(--ink);line-height:1.6;padding:24px}
+  .wrap{max-width:1180px;margin:0 auto}
+  header.head{background:var(--card-soft);border-radius:var(--radius);padding:22px 26px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+  .head h1{font-size:22px;display:flex;align-items:center;gap:10px}
+  .head h1 .logo{width:38px;height:38px;border-radius:11px;flex:none;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;color:#fff;font-weight:700}
+  .head .sub{color:var(--ink-soft);font-size:13px}
+  .tag-level{font-size:12px;font-weight:700;color:#fff;background:var(--primary);padding:4px 10px;border-radius:20px}
+  section.block{background:var(--card);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow-sm);margin-bottom:18px}
+  .block-title{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:16px;color:var(--ink)}
+  .block-title::before{content:"";width:4px;height:16px;border-radius:3px;background:var(--primary)}
+  .block-title .hint{font-weight:400;color:var(--ink-soft);font-size:12px}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .stat-card{background:linear-gradient(135deg,#f6f8ff,#fff);border:1px solid var(--line);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden}
+  .stat-card .stat-value{font-size:30px;font-weight:800;color:var(--primary);line-height:1.2}
+  .stat-card .stat-label{font-size:13px;color:var(--ink-soft);margin-top:4px}
+  .stat-card .stat-unit{font-size:14px;color:var(--ink-soft);font-weight:600;margin-left:3px}
+  .stat-card.accent .stat-value{color:var(--accent)}
+  .stat-card.warn .stat-value{color:var(--warn)}
+  .stat-card.gold .stat-value{color:var(--gold)}
+  .controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+  .search-box{position:relative;flex:1;min-width:220px}
+  .search-box input{width:100%;padding:11px 14px 11px 38px;border:1px solid var(--line);border-radius:10px;font-size:14px;outline:none;transition:border-color .2s}
+  .search-box input:focus{border-color:var(--primary)}
+  .search-box .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-soft)}
+  .btn-group{display:flex;gap:6px;background:#eef1f7;padding:4px;border-radius:10px}
+  .btn-group button{border:none;background:transparent;padding:8px 14px;border-radius:7px;font-size:13px;color:var(--ink-soft);cursor:pointer;transition:all .18s}
+  .btn-group button.active{background:#fff;color:var(--primary);font-weight:700;box-shadow:var(--shadow-sm)}
+  .rank-grid{display:grid;grid-template-columns:1fr;gap:14px}
+  .rank-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+  .rank-card h4{font-size:13px;color:var(--ink-soft);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .rank-card h4 .dot{width:8px;height:8px;border-radius:50%;background:var(--primary)}
+  .rank-card.fail h4 .dot{background:var(--warn)}
+  .rank-list{display:flex;flex-direction:column;gap:8px}
+  .rank-row{display:flex;align-items:center;justify-content:space-between;font-size:13px}
+  .rank-row .rk{width:22px;height:22px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;font-size:12px}
+  .rank-row .rk{background:#fde9dd;color:#c0602a}
+  .rank-row .nm{flex:1;margin:0 8px;font-weight:600}
+  .rank-row .vl{font-weight:700;color:var(--warn)}
+  .empty{color:var(--ink-soft);font-size:13px;font-style:italic;text-align:center;padding:10px 0}
+  .student-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+  .student-card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff;transition:transform .18s,box-shadow .18s;cursor:pointer}
+  .student-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+  .student-card .hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .avatar{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;color:#fff;font-size:15px}
+  .avatar.boy{background:linear-gradient(135deg,#5b7cfa,#7a5bfa)}
+  .avatar.girl{background:linear-gradient(135deg,#ff5d8f,#ff8fb1)}
+  .student-card .name{font-weight:700;font-size:15px}
+  .student-card .meta{font-size:12px;color:var(--ink-soft)}
+  .student-card .rank-badge{margin-left:auto;font-size:12px;font-weight:700;color:#fff;background:var(--primary);padding:3px 9px;border-radius:20px}
+  .student-card .rank-badge.gold{background:var(--gold)}
+  .score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
+  .score-item{text-align:center;background:#f6f8ff;border-radius:8px;padding:6px 2px}
+  .score-item .sbj{font-size:11px;color:var(--ink-soft)}
+  .score-item .val{font-size:14px;font-weight:700}
+  .score-item .val.fail{color:var(--warn)}
+  .score-item .val.full{color:var(--accent)}
+  .student-card .ft{display:flex;align-items:center;justify-content:space-between;border-top:1px dashed var(--line);padding-top:8px;font-size:13px}
+  .student-card .ft .total{font-weight:800;color:var(--primary)}
+  .student-card .ft .avg{color:var(--ink-soft)}
+  footer.foot{text-align:center;color:rgba(255,255,255,.7);font-size:12px;padding:14px 0}
+  /* 等级一提示框 */
+  .task-note{background:#fff8e6;border:1px solid #f3e0a8;color:#7a5d10;border-radius:10px;padding:12px 16px;font-size:13px;margin-bottom:18px}
+  .task-note b{color:#5a4700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 任务提示（完成后可删除）-->
+  <div class="task-note">
+    <b>📌 等级一·任务说明：</b>本模板已提供完整 HTML 结构与样式，<b>JS 逻辑留空</b>。
+    请在下方 <code>&lt;script&gt;</code> 中补全 5 个函数，运行后与
+    <code>target.html</code> 对应区域<b>一比一还原</b>。建议用 Trae 打开本文件，
+    对照 target.html 的渲染效果边问边写。
+  </div>
+
+  <header class="head">
+    <h1><span class="logo">分</span>学生成绩分析面板</h1>
+    <div>
+      <span class="tag-level">等级一 · 基础</span>
+      <div class="sub">DOM 查找 × 数组方法 × 函数 综合实战</div>
+    </div>
+  </header>
+
+  <!-- 区域1：统计卡片 -->
+  <section class="block">
+    <div class="block-title">班级概览 <span class="hint">getElementById / reduce / filter</span></div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-value" id="statCount">0</div><div class="stat-label">班级人数（人）</div></div>
+      <div class="stat-card accent"><div class="stat-value" id="statTotalScore">0</div><div class="stat-label">班级总分</div></div>
+      <div class="stat-card gold"><div class="stat-value" id="statAvgScore">0</div><div class="stat-label">班级平均分</div></div>
+      <div class="stat-card warn"><div class="stat-value" id="statPassRate">0<span class="stat-unit">%</span></div><div class="stat-label">及格率（无不及格科目）</div></div>
+    </div>
+  </section>
+
+  <!-- 区域2：控制区（搜索 + 排序）-->
+  <section class="block">
+    <div class="block-title">数据操作 <span class="hint">filter / sort / querySelectorAll / classList / 事件委托</span></div>
+    <div class="controls">
+      <div class="search-box">
+        <span class="ico">🔍</span>
+        <input type="text" id="searchInput" placeholder="按姓名或学号搜索…">
+      </div>
+      <div class="btn-group" id="sortBtns">
+        <button class="active" data-sort="total">按总分↓</button>
+        <button data-sort="id">按学号↑</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 区域3：不及格预警（榜单区简化）-->
+  <section class="block">
+    <div class="block-title">不及格预警 <span class="hint">filter / sort / forEach</span></div>
+    <div class="rank-grid">
+      <div class="rank-card fail">
+        <h4><span class="dot"></span>不及格学生名单</h4>
+        <div class="rank-list" id="failWarningList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 区域4：学生卡片列表 -->
+  <section class="block">
+    <div class="block-title">学生成绩卡片 <span class="hint">forEach / createElement / classList</span></div>
+    <div class="student-grid" id="studentList"></div>
+  </section>
+
+  <footer class="foot">高级网页设计课堂实践任务 · 等级一（基础）· 起始模板</footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+/* ============================================================
+ * 等级一（基础）· 起始模板
+ * 在下方补全函数实现，运行后与 target.html 一比一还原
+ * 数据来源：window.STUDENTS / window.SUBJECTS（见 data.js）
+ * ============================================================ */
+(function () {
+  "use strict";
+  const STUDENTS = window.STUDENTS;
+  const SUBJECTS = window.SUBJECTS;
+
+  const PASS_LINE = 60;          // 及格线
+  const EXCELLENT_AVG = 85;      // 优秀线（等级一暂不使用）
+
+  /* ---------- 工具函数 ---------- */
+  function scoreClass(v) {
+    if (v < PASS_LINE) return "fail";
+    if (v >= 100) return "full";
+    return "";
+  }
+
+  function getTotal(s) {
+    return SUBJECTS.reduce(function (sum, sub) { return sum + s[sub.key]; }, 0);
+  }
+
+  function getAvg(s) {
+    return Math.round(getTotal(s) / SUBJECTS.length * 10) / 10;
+  }
+
+  function getFails(s) {
+    return SUBJECTS.filter(function (sub) { return s[sub.key] < PASS_LINE; });
+  }
+
+  function firstName(s) {
+    return s.name.charAt(0);
+  }
+
+
+  /* ============ 以下 5 个为本等级必做函数 ============ */
+
+  /* ① 渲染统计卡片 */
+  function renderStats(list) {
+    var count = list.length;
+    var totalScore = list.reduce(function (sum, s) { return sum + getTotal(s); }, 0);
+    var avgScore = count ? Math.round(totalScore / (count * SUBJECTS.length) * 10) / 10 : 0;
+    var passCount = list.filter(function (s) { return getFails(s).length === 0; }).length;
+    var passRate = count ? Math.round(passCount / count * 100) : 0;
+
+    document.getElementById("statCount").textContent = count;
+    document.getElementById("statTotalScore").textContent = totalScore;
+    document.getElementById("statAvgScore").textContent = avgScore;
+    var statRate = document.getElementById("statPassRate");
+    statRate.firstChild.textContent = passRate;
+  }
+
+
+  /* ② 渲染学生卡片列表 */
+  function renderStudentCards(list) {
+    var container = document.getElementById("studentList");
+    container.innerHTML = "";
+
+    list.forEach(function (s, idx) {
+      var card = document.createElement("div");
+      card.className = "student-card";
+      card.setAttribute("data-id", s.id);
+
+      // 头部
+      var hd = document.createElement("div");
+      hd.className = "hd";
+      var avatar = document.createElement("div");
+      avatar.className = "avatar " + (s.gender === "女" ? "girl" : "boy");
+      avatar.textContent = firstName(s);
+      var hdRight = document.createElement("div");
+      hdRight.innerHTML =
+        '<div class="name">' + s.name + '</div>' +
+        '<div class="meta">学号 ' + s.id + '</div>';
+      var rankBadge = document.createElement("span");
+      rankBadge.className = "rank-badge" + (idx < 3 && list[idx + 1] && getTotal(list[idx]) > 450 ? " gold" : "");
+      rankBadge.textContent = "第 " + (idx + 1) + " 名";
+      hd.appendChild(avatar);
+      hd.appendChild(hdRight);
+      hd.appendChild(rankBadge);
+
+      // 分数网格
+      var scoreGrid = document.createElement("div");
+      scoreGrid.className = "score-grid";
+      SUBJECTS.forEach(function (sub) {
+        var item = document.createElement("div");
+        item.className = "score-item";
+        var sbj = document.createElement("div");
+        sbj.className = "sbj";
+        sbj.textContent = sub.abbr;
+        var val = document.createElement("div");
+        val.className = "val " + scoreClass(s[sub.key]);
+        val.textContent = s[sub.key];
+        item.appendChild(sbj);
+        item.appendChild(val);
+        scoreGrid.appendChild(item);
+      });
+
+      // 底部
+      var ft = document.createElement("div");
+      ft.className = "ft";
+      ft.innerHTML =
+        '<span>总分 <span class="total">' + getTotal(s) + '</span></span>' +
+        '<span class="avg">均分 ' + getAvg(s) + '</span>';
+
+      card.appendChild(hd);
+      card.appendChild(scoreGrid);
+      card.appendChild(ft);
+      container.appendChild(card);
+    });
+  }
+
+
+  /* ③ 渲染不及格预警 */
+  function renderFailWarning(list) {
+    var container = document.getElementById("failWarningList");
+    container.innerHTML = "";
+
+    var fails = list.filter(function (s) { return getFails(s).length > 0; });
+    fails.sort(function (a, b) { return getFails(b).length - getFails(a).length; });
+
+    if (fails.length === 0) {
+      container.innerHTML = '<div class="empty">全员通过，无预警</div>';
+      return;
+    }
+
+    fails.forEach(function (s, idx) {
+      var failNames = getFails(s).map(function (sub) { return sub.name; }).join("、");
+      var row = document.createElement("div");
+      row.className = "rank-row";
+      row.innerHTML =
+        '<span class="rk" style="background:#ffd9c8;color:#c0602a">' + getFails(s).length + '</span>' +
+        '<span class="nm">' + s.name + '（' + failNames + '）</span>' +
+        '<span class="vl">总分 ' + getTotal(s) + '</span>';
+      container.appendChild(row);
+    });
+  }
+
+
+  /* ④ 搜索 */
+  function search(keyword) {
+    var kw = keyword.trim().toLowerCase();
+    if (!kw) return STUDENTS.slice();
+    return STUDENTS.filter(function (s) {
+      return s.name.toLowerCase().indexOf(kw) !== -1 ||
+             s.id.toLowerCase().indexOf(kw) !== -1;
+    });
+  }
+
+
+  /* ⑤ 排序 */
+  var currentSort = "total";
+  function sortList(list, by) {
+    var copy = list.slice();
+    if (by === "id") {
+      copy.sort(function (a, b) { return a.id > b.id ? 1 : -1; });
+    } else {
+      copy.sort(function (a, b) { return getTotal(b) - getTotal(a); });
+    }
+    return copy;
+  }
+
+
+  /* ---------- 主刷新流程：依次调用上述函数 ---------- */
+  function refresh() {
+    var kw = document.getElementById("searchInput").value;
+    var data = sortList(search(kw), currentSort);
+    renderStats(data);
+    renderStudentCards(data);
+    renderFailWarning(data);
+  }
+
+
+  /* ---------- 事件绑定（已给出，无需修改） ---------- */
+  var timer = null;
+  document.getElementById("searchInput").addEventListener("input", function () {
+    clearTimeout(timer);
+    timer = setTimeout(refresh, 200);
+  });
+
+  // 排序按钮：事件委托 + querySelectorAll 切换高亮
+  document.getElementById("sortBtns").addEventListener("click", function (e) {
+    var btn = e.target.closest("button");
+    if (!btn) return;
+    currentSort = btn.getAttribute("data-sort");
+    this.querySelectorAll("button").forEach(function (b) { b.classList.remove("active"); });
+    btn.classList.add("active");
+    refresh();
+  });
+
+  /* ---------- 初始化 ---------- */
+  refresh();
+})();
+</script>
+</body>
+</html>

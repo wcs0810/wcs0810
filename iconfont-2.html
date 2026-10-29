@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucide SVG 图标展示 - iconfont-2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wcs810-ink: #1c1917;
+            --wcs810-paper: #ffffff;
+            --wcs810-bg: #f5f5f4;
+            --wcs810-accent: #5eead4;
+            --wcs810-muted: #78716c;
+            --wcs810-border: #e7e5e4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--wcs810-bg);
+            color: var(--wcs810-ink);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* 顶部导航 */
+        .wcs810_topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: var(--wcs810-paper);
+            border-bottom: 1px solid var(--wcs810-border);
+        }
+
+        .wcs810_logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--wcs810-ink);
+            text-decoration: none;
+        }
+
+        .wcs810_logo svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--wcs810-accent);
+        }
+
+        .wcs810_nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .wcs810_nav a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            color: var(--wcs810-muted);
+            text-decoration: none;
+            font-size: 0.9em;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .wcs810_nav a:hover,
+        .wcs810_nav a.wcs810_active {
+            color: var(--wcs810-ink);
+            background: var(--wcs810-bg);
+        }
+
+        .wcs810_nav a svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* 主内容区 */
+        .wcs810_container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .wcs810_hero {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .wcs810_hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.8em;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            color: var(--wcs810-ink);
+        }
+
+        .wcs810_hero h1 span {
+            position: relative;
+            display: inline-block;
+        }
+
+        .wcs810_hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--wcs810-accent);
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .wcs810_hero p {
+            font-size: 1.1em;
+            color: var(--wcs810-muted);
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* 图标网格 */
+        .wcs810_grid-section {
+            margin-bottom: 64px;
+        }
+
+        .wcs810_section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .wcs810_section-header svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--wcs810-muted);
+        }
+
+        .wcs810_section-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--wcs810-ink);
+        }
+
+        .wcs810_section-count {
+            font-size: 0.85em;
+            color: var(--wcs810-muted);
+            margin-left: auto;
+        }
+
+        .wcs810_icons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+        }
+
+        .wcs810_icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 12px;
+            background: var(--wcs810-paper);
+            border: 1px solid var(--wcs810-border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .wcs810_icon-item:hover {
+            border-color: var(--wcs810-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(94, 234, 212, 0.15);
+        }
+
+        .wcs810_icon-item svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--wcs810-ink);
+            margin-bottom: 10px;
+            transition: stroke 0.2s;
+        }
+
+        .wcs810_icon-item:hover svg {
+            stroke: var(--wcs810-accent);
+        }
+
+        .wcs810_icon-name {
+            font-size: 0.75em;
+            color: var(--wcs810-muted);
+            text-align: center;
+        }
+
+        /* 分隔线 */
+        .wcs810_divider {
+            height: 1px;
+            background: var(--wcs810-border);
+            margin: 48px 0;
+        }
+
+        /* 页脚 */
+        .wcs810_footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--wcs810-muted);
+            font-size: 0.85em;
+        }
+
+        .wcs810_footer svg {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 640px) {
+            .wcs810_topbar {
+                padding: 16px 20px;
+            }
+
+            .wcs810_container {
+                padding: 40px 20px;
+            }
+
+            .wcs810_hero h1 {
+                font-size: 1.8em;
+            }
+
+            .wcs810_icons {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="wcs810_topbar">
+        <a href="index.html" class="wcs810_logo">
+            <i data-lucide="feather"></i>
+            <span>Lucide</span>
+        </a>
+        <nav class="wcs810_nav">
+            <a href="index.html">
+                <i data-lucide="home"></i>
+                <span>首页</span>
+            </a>
+            <a href="iconfont-1.html">
+                <i data-lucide="font"></i>
+                <span>Font Awesome</span>
+            </a>
+            <a href="iconfont-2.html" class="wcs810_active">
+                <i data-lucide="feather"></i>
+                <span>Lucide</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- 主内容 -->
+    <main class="wcs810_container">
+        <section class="wcs810_hero">
+            <h1>
+                <span>极简主义</span>的<br>SVG 图标设计
+            </h1>
+            <p>
+                Lucide 是一个轻量级的开源图标库，提供简洁一致的 SVG 图标。
+                本页面采用 lucide.createIcons() 方式渲染，资源完全本地化。
+            </p>
+        </section>
+
+        <!-- 常用图标 -->
+        <section class="wcs810_grid-section">
+            <div class="wcs810_section-header">
+                <i data-lucide="star"></i>
+                <h2 class="wcs810_section-title">常用图标</h2>
+                <span class="wcs810_section-count">12 个</span>
+            </div>
+            <div class="wcs810_icons">
+                <div class="wcs810_icon-item"><i data-lucide="home"></i><span class="wcs810_icon-name">home</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="user"></i><span class="wcs810_icon-name">user</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="heart"></i><span class="wcs810_icon-name">heart</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="star"></i><span class="wcs810_icon-name">star</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="bell"></i><span class="wcs810_icon-name">bell</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="settings"></i><span class="wcs810_icon-name">settings</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="mail"></i><span class="wcs810_icon-name">mail</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="search"></i><span class="wcs810_icon-name">search</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="shopping-cart"></i><span class="wcs810_icon-name">cart</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="camera"></i><span class="wcs810_icon-name">camera</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="music"></i><span class="wcs810_icon-name">music</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="film"></i><span class="wcs810_icon-name">film</span></div>
+            </div>
+        </section>
+
+        <div class="wcs810_divider"></div>
+
+        <!-- 文档与编辑 -->
+        <section class="wcs810_grid-section">
+            <div class="wcs810_section-header">
+                <i data-lucide="folder"></i>
+                <h2 class="wcs810_section-title">文档与编辑</h2>
+                <span class="wcs810_section-count">8 个</span>
+            </div>
+            <div class="wcs810_icons">
+                <div class="wcs810_icon-item"><i data-lucide="file"></i><span class="wcs810_icon-name">file</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="folder"></i><span class="wcs810_icon-name">folder</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="edit"></i><span class="wcs810_icon-name">edit</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="copy"></i><span class="wcs810_icon-name">copy</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="trash-2"></i><span class="wcs810_icon-name">trash</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="download"></i><span class="wcs810_icon-name">download</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="upload"></i><span class="wcs810_icon-name">upload</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="save"></i><span class="wcs810_icon-name">save</span></div>
+            </div>
+        </section>
+
+        <div class="wcs810_divider"></div>
+
+        <!-- 社交与交互 -->
+        <section class="wcs810_grid-section">
+            <div class="wcs810_section-header">
+                <i data-lucide="share-2"></i>
+                <h2 class="wcs810_section-title">社交与交互</h2>
+                <span class="wcs810_section-count">8 个</span>
+            </div>
+            <div class="wcs810_icons">
+                <div class="wcs810_icon-item"><i data-lucide="share-2"></i><span class="wcs810_icon-name">share</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="message-circle"></i><span class="wcs810_icon-name">message</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="thumbs-up"></i><span class="wcs810_icon-name">like</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="eye"></i><span class="wcs810_icon-name">view</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="link"></i><span class="wcs810_icon-name">link</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="bookmark"></i><span class="wcs810_icon-name">bookmark</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="calendar"></i><span class="wcs810_icon-name">calendar</span></div>
+                <div class="wcs810_icon-item"><i data-lucide="clock"></i><span class="wcs810_icon-name">clock</span></div>
+            </div>
+        </section>
+
+        <div class="wcs810_divider"></div>
+
+        <footer class="wcs810_footer">
+            <p>
+                <i data-lucide="feather"></i>
+                Lucide Icons · SVG 方式渲染 · 资源存放于 cdn/lucide
+            </p>
+        </footer>
+    </main>
+
+    <script src="cdn/lucide/lucide.min.js"></script>
+    <script>
+        // 渲染所有 data-lucide 图标为 SVG
+        const wcs810_icons = document.querySelectorAll('[data-lucide]');
+        lucide.createIcons();
+        console.log('Lucide 图标已渲染，共 ' + wcs810_icons.length + ' 个');
+    </script>
+</body>
+</html>
