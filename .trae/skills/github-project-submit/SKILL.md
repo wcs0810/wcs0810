@@ -56,8 +56,8 @@ Commits the current workspace and pushes it to a GitHub repository using SSH aut
 - Never commit secrets: skip `.env`, token files, and files containing credentials.
 - Never use `git push --force` unless the user explicitly requests it.
 - Keep the existing `origin` (Gitee) untouched; push through the dedicated `github` remote.
-- If SSH auth fails, show `ssh -T git@github.com` output and ask the user to add the public key to GitHub.
 - Do not rewrite history; always create new commits.
+- **Network fallback**: this machine cannot reach GitHub over SSH (port 22 refused, `ssh.github.com:443` timed out). When SSH fails, keep the HTTPS URL and rely on the credentials already stored in Windows Credential Manager (`git:https://github.com`, user `wcs0810`), then push with `GIT_TERMINAL_PROMPT=0` so it never blocks on input.
 
 ## Example
 
