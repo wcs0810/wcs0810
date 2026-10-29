@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="王传淞《高级网页设计》课程作品索引，汇总全部课堂练习、组件与模板页面。">
+    <title>王传淞｜高级网页设计 · 作品索引</title>
+    <style>
+        :root {
+            --wcs810_ink: #14181d;
+            --wcs810_ink-soft: #5c6670;
+            --wcs810_paper: #f3f0e8;
+            --wcs810_line: #cfc7b7;
+            --wcs810_red: #b8482c;
+            --wcs810_slate: #26405c;
+            --wcs810_cream: #fffdf7;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--wcs810_ink);
+            font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+            background: var(--wcs810_paper);
+            background-image: radial-gradient(circle at 12% 8%, rgba(184, 72, 44, 0.08), transparent 42%),
+                radial-gradient(circle at 88% 0%, rgba(38, 64, 92, 0.09), transparent 46%);
+            background-repeat: no-repeat;
+        }
+
+        .wcs810_shell {
+            width: min(1140px, calc(100% - 44px));
+            margin: 0 auto;
+            padding: 46px 0 40px;
+        }
+
+        .wcs810_masthead {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 18px;
+            border-bottom: 2px solid var(--wcs810_ink);
+        }
+
+        .wcs810_masthead-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--wcs810_red);
+        }
+
+        .wcs810_masthead-meta {
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.1em;
+            color: var(--wcs810_ink-soft);
+        }
+
+        .wcs810_hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 210px;
+            gap: 34px;
+            align-items: end;
+            padding: 54px 0 46px;
+            border-bottom: 1px solid var(--wcs810_line);
+        }
+
+        .wcs810_hero-title {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.9rem, 7vw, 5.6rem);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.01em;
+        }
+
+        .wcs810_hero-title span {
+            display: block;
+            color: var(--wcs810_slate);
+            font-style: italic;
+        }
+
+        .wcs810_hero-text {
+            max-width: 520px;
+            margin: 22px 0 0;
+            color: var(--wcs810_ink-soft);
+            font-size: 1.02rem;
+            line-height: 1.9;
+        }
+
+        .wcs810_hero-note {
+            margin: 0;
+            padding: 18px 20px;
+            border-left: 3px solid var(--wcs810_red);
+            background: rgba(255, 253, 247, 0.7);
+            font-size: 0.86rem;
+            line-height: 1.8;
+            color: var(--wcs810_ink-soft);
+        }
+
+        .wcs810_hero-note strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--wcs810_ink);
+            font-size: 0.94rem;
+        }
+
+        .wcs810_section {
+            padding-top: 46px;
+        }
+
+        .wcs810_section-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--wcs810_line);
+        }
+
+        .wcs810_section-title {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.5rem, 3vw, 2.1rem);
+            font-weight: 700;
+        }
+
+        .wcs810_section-title::before {
+            content: "§";
+            margin-right: 12px;
+            color: var(--wcs810_red);
+            font-size: 1.1rem;
+            vertical-align: 2px;
+        }
+
+        .wcs810_section-count {
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.76rem;
+            letter-spacing: 0.12em;
+            color: var(--wcs810_ink-soft);
+        }
+
+        .wcs810_list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wcs810_row {
+            display: grid;
+            grid-template-columns: 62px minmax(0, 1fr) auto;
+            gap: 22px;
+            align-items: start;
+            padding: 20px 10px 20px 0;
+            border-bottom: 1px solid rgba(207, 199, 183, 0.65);
+            text-decoration: none;
+            color: inherit;
+            transition: background 160ms ease, padding-left 160ms ease;
+        }
+
+        .wcs810_row:hover,
+        .wcs810_row:focus-visible {
+            padding-left: 12px;
+            background: var(--wcs810_cream);
+            outline: none;
+        }
+
+        .wcs810_row-no {
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.82rem;
+            color: var(--wcs810_red);
+            padding-top: 4px;
+        }
+
+        .wcs810_row-title {
+            margin: 0;
+            font-size: 1.12rem;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .wcs810_row-desc {
+            margin: 6px 0 0;
+            color: var(--wcs810_ink-soft);
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        .wcs810_row-path {
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.74rem;
+            color: var(--wcs810_ink-soft);
+            white-space: nowrap;
+            padding-top: 5px;
+        }
+
+        .wcs810_row:hover .wcs810_row-path,
+        .wcs810_row:focus-visible .wcs810_row-path {
+            color: var(--wcs810_slate);
+        }
+
+        .wcs810_footer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 54px;
+            padding-top: 18px;
+            border-top: 2px solid var(--wcs810_ink);
+            color: var(--wcs810_ink-soft);
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+        }
+
+        @media (max-width: 860px) {
+            .wcs810_hero {
+                grid-template-columns: 1fr;
+                align-items: start;
+            }
+
+            .wcs810_row {
+                grid-template-columns: 46px minmax(0, 1fr);
+                gap: 14px;
+            }
+
+            .wcs810_row-path {
+                display: none;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .wcs810_shell {
+                width: min(100% - 28px, 560px);
+                padding-top: 30px;
+            }
+
+            .wcs810_hero {
+                padding: 38px 0 34px;
+            }
+
+            .wcs810_section {
+                padding-top: 34px;
+            }
+
+            .wcs810_section-head {
+                display: block;
+            }
+
+            .wcs810_section-count {
+                display: block;
+                margin-top: 7px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wcs810_shell">
+        <div class="wcs810_masthead">
+            <div class="wcs810_masthead-label">Advanced Web Design</div>
+            <div class="wcs810_masthead-meta">2026 / 王传淞 / 作品索引</div>
+        </div>
+
+        <header class="wcs810_hero">
+            <div>
+                <h1 class="wcs810_hero-title">高级网页设计<span>Index of Works</span></h1>
+                <p class="wcs810_hero-text">
+                    从第一个 HTML 基础页到可交互的小球训练，这里把《高级网页设计》课程的全部练习归档在同一张索引上。每一行都是一次课堂练习，点击即可直接打开。
+                </p>
+            </div>
+            <p class="wcs810_hero-note">
+                <strong>共 18 个页面</strong>
+                全部使用原生 HTML、CSS 与 JavaScript 编写，图标与字体资源均已本地化，无外部 CDN 依赖。
+            </p>
+        </header>
+
+        <section class="wcs810_section" aria-labelledby="wcs810_course-title">
+            <div class="wcs810_section-head">
+                <h2 class="wcs810_section-title" id="wcs810_course-title">课堂主线</h2>
+                <span class="wcs810_section-count">3 ENTRIES</span>
+            </div>
+            <ul class="wcs810_list">
+                <li>
+                    <a class="wcs810_row" href="810王传淞/index.html">
+                        <span class="wcs810_row-no">01</span>
+                        <span>
+                            <span class="wcs810_row-title">课堂实践目录</span>
+                            <span class="wcs810_row-desc">按模块梳理的课堂作品总览，包含当前全部课堂入口与提示词记录。</span>
+                        </span>
+                        <span class="wcs810_row-path">810王传淞/index.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="810王传淞/HTML_basic_001.html">
+                        <span class="wcs810_row-no">02</span>
+                        <span>
+                            <span class="wcs810_row-title">HTML 基础与自我介绍</span>
+                            <span class="wcs810_row-desc">练习标题、段落、列表、表格、语义化标签与表单，并完成一份自我介绍网页。</span>
+                        </span>
+                        <span class="wcs810_row-path">810王传淞/HTML_basic_001.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="810王传淞/today-time.html">
+                        <span class="wcs810_row-no">03</span>
+                        <span>
+                            <span class="wcs810_row-title">今天的时间</span>
+                            <span class="wcs810_row-desc">用 JavaScript 获取系统日期与时间，并让页面时钟每秒自动刷新。</span>
+                        </span>
+                        <span class="wcs810_row-path">810王传淞/today-time.html</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section class="wcs810_section" aria-labelledby="wcs810_practice-title">
+            <div class="wcs810_section-head">
+                <h2 class="wcs810_section-title" id="wcs810_practice-title">逐次练习</h2>
+                <span class="wcs810_section-count">8 ENTRIES</span>
+            </div>
+            <ul class="wcs810_list">
+                <li>
+                    <a class="wcs810_row" href="9.14/stack004.html">
+                        <span class="wcs810_row-no">04</span>
+                        <span>
+                            <span class="wcs810_row-title">层叠、继承与盒模型</span>
+                            <span class="wcs810_row-desc">观察选择器优先级、继承关系，并用 padding、border、margin 拆解盒模型。</span>
+                        </span>
+                        <span class="wcs810_row-path">9.14/stack004.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="9.17/picture_above_text.html">
+                        <span class="wcs810_row-no">05</span>
+                        <span>
+                            <span class="wcs810_row-title">上图下文图片墙</span>
+                            <span class="wcs810_row-desc">用网格把图片排成三列，在每张图下方配一段说明文字。</span>
+                        </span>
+                        <span class="wcs810_row-path">9.17/picture_above_text.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="9.21/layout004.html">
+                        <span class="wcs810_row-no">06</span>
+                        <span>
+                            <span class="wcs810_row-title">网页布局练习</span>
+                            <span class="wcs810_row-desc">用多栏结构组织内容，练习区块划分与间距控制。</span>
+                        </span>
+                        <span class="wcs810_row-path">9.21/layout004.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="9.24/card-hover.html">
+                        <span class="wcs810_row-no">07</span>
+                        <span>
+                            <span class="wcs810_row-title">卡片悬停动效</span>
+                            <span class="wcs810_row-desc">借助 transition 与 transform 制作克制的卡片交互反馈。</span>
+                        </span>
+                        <span class="wcs810_row-path">9.24/card-hover.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="9.24(1)/grid004.html">
+                        <span class="wcs810_row-no">08</span>
+                        <span>
+                            <span class="wcs810_row-title">网格布局基础</span>
+                            <span class="wcs810_row-desc">认识 grid-template 与行列跨度，让小屏与宽屏都能整齐排布。</span>
+                        </span>
+                        <span class="wcs810_row-path">9.24(1)/grid004.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="9.28/svg004.html">
+                        <span class="wcs810_row-no">09</span>
+                        <span>
+                            <span class="wcs810_row-title">SVG 图形绘制</span>
+                            <span class="wcs810_row-desc">用 path、circle、line 等元素绘制可无损缩放的矢量图形。</span>
+                        </span>
+                        <span class="wcs810_row-path">9.28/svg004.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="10.8/css3004.html">
+                        <span class="wcs810_row-no">10</span>
+                        <span>
+                            <span class="wcs810_row-title">CSS 综合练习</span>
+                            <span class="wcs810_row-desc">把字体、颜色、边框与背景组合成完整的页面样式。</span>
+                        </span>
+                        <span class="wcs810_row-path">10.8/css3004.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="10.12/dateTyp004.html">
+                        <span class="wcs810_row-no">11</span>
+                        <span>
+                            <span class="wcs810_row-title">日期与数字交互</span>
+                            <span class="wcs810_row-desc">结合日期对象与事件处理，让数字随用户操作变化。</span>
+                        </span>
+                        <span class="wcs810_row-path">10.12/dateTyp004.html</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section class="wcs810_section" aria-labelledby="wcs810_component-title">
+            <div class="wcs810_section-head">
+                <h2 class="wcs810_section-title" id="wcs810_component-title">组件 · 模板 · 游戏</h2>
+                <span class="wcs810_section-count">7 ENTRIES</span>
+            </div>
+            <ul class="wcs810_list">
+                <li>
+                    <a class="wcs810_row" href="iconfont-1.html">
+                        <span class="wcs810_row-no">12</span>
+                        <span>
+                            <span class="wcs810_row-title">Font Awesome 字体图标</span>
+                            <span class="wcs810_row-desc">以字体方式引入图标，展示图标与文字混排的排版效果。</span>
+                        </span>
+                        <span class="wcs810_row-path">iconfont-1.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="iconfont-2.html">
+                        <span class="wcs810_row-no">13</span>
+                        <span>
+                            <span class="wcs810_row-title">Lucide SVG 图标</span>
+                            <span class="wcs810_row-desc">以 SVG 方式引入图标，任意缩放仍保持清晰边缘。</span>
+                        </span>
+                        <span class="wcs810_row-path">iconfont-2.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="iconfont-3.html">
+                        <span class="wcs810_row-no">14</span>
+                        <span>
+                            <span class="wcs810_row-title">移动端下导航（字体图标）</span>
+                            <span class="wcs810_row-desc">固定底部的自适应导航条，含数字徽章与红点提醒。</span>
+                        </span>
+                        <span class="wcs810_row-path">iconfont-3.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="iconfont-4.html">
+                        <span class="wcs810_row-no">15</span>
+                        <span>
+                            <span class="wcs810_row-title">移动端下导航（SVG）</span>
+                            <span class="wcs810_row-desc">与上一页相同的导航结构，改用 SVG 图标实现。</span>
+                        </span>
+                        <span class="wcs810_row-path">iconfont-4.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="starter-level1-810-wcs.html">
+                        <span class="wcs810_row-no">16</span>
+                        <span>
+                            <span class="wcs810_row-title">学生成绩看板 · 基础版</span>
+                            <span class="wcs810_row-desc">把学生与科目数据渲染成表格与概览卡片，练习数据驱动的页面。</span>
+                        </span>
+                        <span class="wcs810_row-path">starter-level1-810-wcs.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="starter-level2-810-wcs.html">
+                        <span class="wcs810_row-no">17</span>
+                        <span>
+                            <span class="wcs810_row-title">学生成绩看板 · 进阶版</span>
+                            <span class="wcs810_row-desc">在基础版之上增加筛选、统计与更完整的视觉层级。</span>
+                        </span>
+                        <span class="wcs810_row-path">starter-level2-810-wcs.html</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="wcs810_row" href="ball/index.html">
+                        <span class="wcs810_row-no">18</span>
+                        <span>
+                            <span class="wcs810_row-title">点击小球训练</span>
+                            <span class="wcs810_row-desc">限时点击训练游戏，含命中率、反应时间统计与多通道反馈。</span>
+                        </span>
+                        <span class="wcs810_row-path">ball/index.html</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <footer class="wcs810_footer">
+            <span>王传淞 · 《高级网页设计》作品索引</span>
+            <span>原生 HTML / CSS / JavaScript · 无外部 CDN</span>
+        </footer>
+    </div>
+</body>
+
+</html>
