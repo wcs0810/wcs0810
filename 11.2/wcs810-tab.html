@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!--
+  作者：王传淞
+  建立时间：2026-11-02 13:40:08
+  使用模型：Kimi-K3
+  功能名称：新闻 Tab 选项卡
+  简介：展示国内新闻、省内新闻、国际新闻、最热新闻四个选项卡，默认选中国内新闻；JS 放在 js 文件夹中外部引用，选项卡逻辑封装为可复用组件，通过事件监听实现"先清除所有选中状态、再设置当前选中状态"的切换效果。
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新闻选项卡 · 王传淞</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      background: #f4f1ea;
+      color: #202124;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: clamp(24px, 6vw, 72px) 16px;
+    }
+
+    /* 返回首页链接 */
+    .wcs810_home-link {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      padding: 8px 16px;
+      background: #202124;
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      border-radius: 999px;
+      transition: background 0.2s ease;
+      z-index: 10;
+    }
+
+    .wcs810_home-link:hover {
+      background: #c8102e;
+    }
+
+    /* 页面主体卡片 */
+    .wcs810_news-card {
+      width: min(720px, 100%);
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(32, 33, 36, 0.08);
+      overflow: hidden;
+    }
+
+    .wcs810_news-header {
+      padding: 28px 28px 0;
+    }
+
+    .wcs810_news-kicker {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      color: #c8102e;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .wcs810_news-title {
+      font-size: clamp(22px, 4vw, 28px);
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    /* 选项卡栏 */
+    .wcs810_tab-bar {
+      display: flex;
+      gap: 4px;
+      margin-top: 20px;
+      padding: 0 28px;
+      border-bottom: 2px solid #e8e3d8;
+      overflow-x: auto;
+    }
+
+    .wcs810_tab-btn {
+      appearance: none;
+      border: none;
+      background: none;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #8a8f98;
+      cursor: pointer;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .wcs810_tab-btn:hover {
+      color: #202124;
+    }
+
+    .wcs810_tab-btn:focus-visible {
+      outline: 2px solid #c8102e;
+      outline-offset: 2px;
+      border-radius: 4px 4px 0 0;
+    }
+
+    /* 选中状态 */
+    .wcs810_tab-btn.wcs810_active {
+      color: #c8102e;
+      font-weight: 700;
+      border-bottom-color: #c8102e;
+    }
+
+    /* 面板区 */
+    .wcs810_tab-panels {
+      padding: 8px 28px 28px;
+    }
+
+    .wcs810_tab-panel {
+      display: none;
+    }
+
+    .wcs810_tab-panel.wcs810_active {
+      display: block;
+      animation: wcs810_fadeIn 0.3s ease;
+    }
+
+    @keyframes wcs810_fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 新闻列表 */
+    .wcs810_news-list {
+      list-style: none;
+    }
+
+    .wcs810_news-item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 4px;
+      border-bottom: 1px dashed #e8e3d8;
+      transition: transform 0.2s ease;
+    }
+
+    .wcs810_news-item:last-child {
+      border-bottom: none;
+    }
+
+    .wcs810_news-item:hover {
+      transform: translateX(4px);
+    }
+
+    .wcs810_news-text {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .wcs810_news-item:hover .wcs810_news-text {
+      color: #c8102e;
+    }
+
+    .wcs810_news-date {
+      flex-shrink: 0;
+      font-size: 12px;
+      color: #8a8f98;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 480px) {
+      .wcs810_news-header,
+      .wcs810_tab-bar,
+      .wcs810_tab-panels {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="wcs810_home-link" href="../index.html">返回首页</a>
+
+  <main class="wcs810_news-card" id="wcs810_newsTabs">
+    <header class="wcs810_news-header">
+      <p class="wcs810_news-kicker">News Center</p>
+      <h1 class="wcs810_news-title">每日新闻速览</h1>
+    </header>
+
+    <!-- 选项卡按钮栏：data-wcs810-target 指向对应面板的选择器 -->
+    <div class="wcs810_tab-bar" role="tablist">
+      <button type="button" class="wcs810_tab-btn wcs810_active" role="tab" aria-selected="true" data-wcs810-target="#wcs810_panel_domestic">国内新闻</button>
+      <button type="button" class="wcs810_tab-btn" role="tab" aria-selected="false" data-wcs810-target="#wcs810_panel_province">省内新闻</button>
+      <button type="button" class="wcs810_tab-btn" role="tab" aria-selected="false" data-wcs810-target="#wcs810_panel_world">国际新闻</button>
+      <button type="button" class="wcs810_tab-btn" role="tab" aria-selected="false" data-wcs810-target="#wcs810_panel_hot">最热新闻</button>
+    </div>
+
+    <!-- 选项卡面板区 -->
+    <div class="wcs810_tab-panels">
+      <div class="wcs810_tab-panel wcs810_active" id="wcs810_panel_domestic" role="tabpanel">
+        <ul class="wcs810_news-list">
+          <li class="wcs810_news-item"><span class="wcs810_news-text">全国粮食产量再创历史新高，连续多年稳定在一万三千亿斤以上</span><span class="wcs810_news-date">11-02</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">我国自主研制的大型客机新增多条国内航线，运力持续提升</span><span class="wcs810_news-date">11-02</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">国家医保药品目录调整落地，一批新药好药纳入报销范围</span><span class="wcs810_news-date">11-01</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">全国多地启动冬季供暖准备工作，保障群众温暖过冬</span><span class="wcs810_news-date">11-01</span></li>
+        </ul>
+      </div>
+
+      <div class="wcs810_tab-panel" id="wcs810_panel_province" role="tabpanel">
+        <ul class="wcs810_news-list">
+          <li class="wcs810_news-item"><span class="wcs810_news-text">省内重点工程项目建设提速，年度投资计划提前完成</span><span class="wcs810_news-date">11-02</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">全省秋粮收获接近尾声，机械化收割率超过九成</span><span class="wcs810_news-date">11-02</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">省内多所高校举办秋季校园招聘会，提供岗位数万个</span><span class="wcs810_news-date">11-01</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">省文化和旅游厅发布冬季旅游线路，吸引游客体验冰雪项目</span><span class="wcs810_news-date">11-01</span></li>
+        </ul>
+      </div>
+
+      <div class="wcs810_tab-panel" id="wcs810_panel_world" role="tabpanel">
+        <ul class="wcs810_news-list">
+          <li class="wcs810_news-item"><span class="wcs810_news-text">多国领导人出席国际气候大会，共商全球减排合作新方案</span><span class="wcs810_news-date">11-02</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">国际能源署发布报告：全球可再生能源装机量持续增长</span><span class="wcs810_news-date">11-02</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">世乒联巡回赛本站收官，多国选手刷新个人最好成绩</span><span class="wcs810_news-date">11-01</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">全球主要航运公司宣布增开亚欧航线班次，缓解运力紧张</span><span class="wcs810_news-date">11-01</span></li>
+        </ul>
+      </div>
+
+      <div class="wcs810_tab-panel" id="wcs810_panel_hot" role="tabpanel">
+        <ul class="wcs810_news-list">
+          <li class="wcs810_news-item"><span class="wcs810_news-text">【热】国产动画电影票房破纪录，海外上映好评如潮</span><span class="wcs810_news-date">11-02</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">【热】新一代人工智能大模型发布，多项能力达到国际领先</span><span class="wcs810_news-date">11-02</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">【热】全国马拉松系列赛周末开跑，报名人数创历史新高</span><span class="wcs810_news-date">11-01</span></li>
+          <li class="wcs810_news-item"><span class="wcs810_news-text">【热】"双11"预售开启，国货品牌成交额大幅增长</span><span class="wcs810_news-date">11-01</span></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- 外部引用 js 文件夹中的可复用选项卡脚本 -->
+  <script src="js/wcs810_tab.js"></script>
+</body>
+</html>

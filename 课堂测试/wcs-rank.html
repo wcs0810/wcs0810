@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--
+  作者：王传淞
+  建立时间：2026-11-02 14:26:00
+  使用模型：TRAE
+  功能名称：点击排行 Tab 选项卡
+  简介：参考桌面 课堂测试\2 目录下图片实现的点击排行组件，
+        包含"实时点击"与"24小时排行"两个选项卡，
+        默认选中"24小时排行"；JS 放在 js 文件夹中外部引用，
+        选项卡逻辑可复用。CSS/JS 前缀使用 wcs_（姓名首字母）。
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>点击排行 · 王传淞</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      background: #f4f1ea;
+      color: #202124;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: clamp(24px, 6vw, 72px) 16px;
+    }
+
+    /* 返回首页链接 */
+    .wcs_home-link {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      padding: 8px 16px;
+      background: #202124;
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      border-radius: 999px;
+      transition: background 0.2s ease;
+      z-index: 10;
+    }
+
+    .wcs_home-link:hover {
+      background: #e64a19;
+    }
+
+    /* 排行卡片 */
+    .wcs_rank-card {
+      width: min(520px, 100%);
+      background: #ffffff;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    /* 卡片头部 */
+    .wcs_rank-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px;
+    }
+
+    .wcs_rank-header-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .wcs_rank-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    /* 选项卡栏 */
+    .wcs_tab-bar {
+      display: flex;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+
+    .wcs_tab-btn {
+      appearance: none;
+      border: none;
+      background: none;
+      padding: 10px 22px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #666;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .wcs_tab-btn:hover {
+      color: #e64a19;
+    }
+
+    .wcs_tab-btn:focus-visible {
+      outline: 2px solid #e64a19;
+      outline-offset: -2px;
+    }
+
+    /* 选中状态：橙色下边框 */
+    .wcs_tab-btn.wcs_active {
+      color: #e64a19;
+      font-weight: 700;
+    }
+
+    .wcs_tab-btn.wcs_active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: #e64a19;
+    }
+
+    /* 面板区 */
+    .wcs_tab-panels {
+      padding: 4px 0 8px;
+    }
+
+    .wcs_tab-panel {
+      display: none;
+    }
+
+    .wcs_tab-panel.wcs_active {
+      display: block;
+    }
+
+    /* 排行列表 */
+    .wcs_rank-list {
+      list-style: none;
+    }
+
+    .wcs_rank-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .wcs_rank-item:hover {
+      background: #fafafa;
+    }
+
+    /* 排名编号 */
+    .wcs_rank-num {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      background: #f5f5f5;
+      color: #999;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 前三名橙色高亮 */
+    .wcs_rank-item:nth-child(1) .wcs_rank-num,
+    .wcs_rank-item:nth-child(2) .wcs_rank-num,
+    .wcs_rank-item:nth-child(3) .wcs_rank-num {
+      background: #e64a19;
+      color: #fff;
+    }
+
+    /* 标题文本 */
+    .wcs_rank-title-text {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* 点击数 */
+    .wcs_rank-count {
+      flex-shrink: 0;
+      font-size: 12px;
+      color: #999;
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body>
+  <a class="wcs_home-link" href="../index.html">返回首页</a>
+
+  <main class="wcs_rank-card" id="wcs_rankTabs">
+    <header class="wcs_rank-header">
+      <img class="wcs_rank-header-icon" src="2/tit06.jpg" alt="">
+      <h1 class="wcs_rank-title">点击排行</h1>
+    </header>
+
+    <!-- 选项卡按钮栏 -->
+    <div class="wcs_tab-bar" role="tablist">
+      <button type="button" class="wcs_tab-btn" role="tab" aria-selected="false" data-wcs-target="#wcs_panel_realtime">实时点击</button>
+      <button type="button" class="wcs_tab-btn wcs_active" role="tab" aria-selected="true" data-wcs-target="#wcs_panel_24h">24小时排行</button>
+    </div>
+
+    <!-- 选项卡面板区 -->
+    <div class="wcs_tab-panels">
+      <!-- 实时点击面板 -->
+      <div class="wcs_tab-panel" id="wcs_panel_realtime" role="tabpanel">
+        <ul class="wcs_rank-list">
+          <li class="wcs_rank-item"><span class="wcs_rank-num">1</span><span class="wcs_rank-title-text">多地今日气温破30度 网友吐槽一秒回夏</span><span class="wcs_rank-count">89213</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">2</span><span class="wcs_rank-title-text">国家队新阵容亮相 首场热身赛大胜对手</span><span class="wcs_rank-count">76541</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">3</span><span class="wcs_rank-title-text">新款手机今日开售 线上预约量破百万</span><span class="wcs_rank-count">62308</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">4</span><span class="wcs_rank-title-text">高校毕业生就业季 招聘会火爆开启</span><span class="wcs_rank-count">51299</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">5</span><span class="wcs_rank-title-text">新能源汽车销量创新高 市场占有率提升</span><span class="wcs_rank-count">43872</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">6</span><span class="wcs_rank-title-text">知名导演新作定档春节 预告片获好评</span><span class="wcs_rank-count">35416</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">7</span><span class="wcs_rank-title-text">医保新政解读：这些药品纳入报销范围</span><span class="wcs_rank-count">28951</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">8</span><span class="wcs_rank-title-text">今日股市收盘点评 三大指数集体飘红</span><span class="wcs_rank-count">22637</span></li>
+        </ul>
+      </div>
+
+      <!-- 24小时排行面板（参考图片1.jpg的数据） -->
+      <div class="wcs_tab-panel wcs_active" id="wcs_panel_24h" role="tabpanel">
+        <ul class="wcs_rank-list">
+          <li class="wcs_rank-item"><span class="wcs_rank-num">1</span><span class="wcs_rank-title-text">灯塔水母：地球上唯一不死生物</span><span class="wcs_rank-count">3566322</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">2</span><span class="wcs_rank-title-text">阿里巴巴全资收购UC 俞永福称U</span><span class="wcs_rank-count">311246</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">3</span><span class="wcs_rank-title-text">亚马逊惊现三米长巨舌鱼用肺</span><span class="wcs_rank-count">295883</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">4</span><span class="wcs_rank-title-text">奉化男子上山抓野味 遭遇强横</span><span class="wcs_rank-count">266061</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">5</span><span class="wcs_rank-title-text">大白鲨深海失踪 或被大型生物</span><span class="wcs_rank-count">243936</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">6</span><span class="wcs_rank-title-text">南非小犀牛目睹母亲被猎杀不肯</span><span class="wcs_rank-count">224346</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">7</span><span class="wcs_rank-title-text">余额宝周岁：收益率"过山车"</span><span class="wcs_rank-count">172694</span></li>
+          <li class="wcs_rank-item"><span class="wcs_rank-num">8</span><span class="wcs_rank-title-text">"尸油入餐桌"纯属无稽之谈</span><span class="wcs_rank-count">128789</span></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- 外部引用 js 文件夹中的可复用选项卡脚本 -->
+  <script src="js/wcs_rank.js"></script>
+</body>
+</html>
