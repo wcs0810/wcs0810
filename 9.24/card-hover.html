@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS作业答案</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 30px;
+      font-family: "Microsoft YaHei", sans-serif;
+      line-height: 1.8;
+      color: #333;
+      background: #f2f3f5;
+    }
+    .homework {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px 30px;
+      background: #fff;
+      border-radius: 8px;
+    }
+    h1 { margin-top: 0; }
+    h2 { margin-top: 28px; border-bottom: 2px solid #409eff; }
+    p { margin: 10px 0; }
+    code { color: #c41d7f; }
+    pre { padding: 12px; overflow-x: auto; background: #f2f3f5; }
+    .back-top {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 6px;
+      background: #409eff;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      opacity: .5;
+      transition: all .3s;
+    }
+    .back-top:hover { opacity: 1; transform: scale(1.1); }
+    @media (max-width: 700px) {
+      body { padding: 12px; }
+      .homework { padding: 18px; }
+    }
+  </style>
+</head>
+<body id="top">
+  <main class="homework">
+    <h1>CSS作业答案</h1>
+
+    <section aria-labelledby="part-one">
+      <h2 id="part-one">第一部分：修复卡片 CSS</h2>
+      <p>第一处：给 <code>li</code> 添加 <code>overflow: hidden</code>，裁切放大后溢出的图片。</p>
+      <pre><code>.box li {
+  width: 300px;
+  overflow: hidden;
+  position: relative;
+}</code></pre>
+      <p>第二处：把 <code>transition</code> 写在普通选择器上，移入和移出都会有动画。</p>
+      <pre><code>.box img { transition: all .6s; }
+.box li:hover img { transform: scale(1.2); }</code></pre>
+      <p>第三处：给 <code>li</code> 添加 <code>position: relative</code>，让绝对定位的文字条以卡片为参照物。</p>
+    </section>
+
+    <section aria-labelledby="part-two">
+      <h2 id="part-two">第二部分：补全答案</h2>
+      <p><strong>2.1 语义标签：</strong>页面顶部头部区域是 <code>&lt;header&gt;</code>；导航条是 <code>&lt;nav&gt;</code>；页面唯一主要内容区是 <code>&lt;main&gt;</code>；侧边栏附属内容是 <code>&lt;aside&gt;</code>；页面底部版权页脚是 <code>&lt;footer&gt;</code>。</p>
+      <p><strong>2.2 卡片动画：</strong>防止图片溢出使用 <code>overflow: hidden</code>；子绝父相使用 <code>position: relative</code>；图片选择器是 <code>.box li img</code> 和 <code>.box li:hover img</code>；奇数卡片选择器是 <code>li:nth-child(odd):hover .txt</code>。</p>
+      <p><strong>2.3 flex 两栏布局：</strong>父容器使用 <code>display: flex</code>，两栏间距使用 <code>gap: 8px</code>。</p>
+    </section>
+
+    <section aria-labelledby="part-three">
+      <h2 id="part-three">第三部分：简答</h2>
+      <p><strong>1. overflow:hidden 的两个作用：</strong>隐藏超出盒子范围的内容，裁切缩放后的图片；同时可以清除浮动，解决父元素高度塌陷。</p>
+      <p><strong>2. scale(1.2) 会不会挤压旁边卡片？</strong>不会。<code>transform</code> 只改变视觉上的渲染效果，不会改变元素在文档流中的实际占位。</p>
+      <p><strong>3. transition 写在 hover 和普通选择器上的区别：</strong>写在普通选择器上，移入和移出都有过渡动画；写在 <code>:hover</code> 上，只有移入有动画，移出会瞬间恢复。</p>
+      <p><strong>4. bug 记录：</strong>文字定位跑到浏览器底部，是因为父级 <code>li</code> 忘记设置 <code>position: relative</code>，子级 <code>absolute</code> 以页面作为定位基准；给 <code>li</code> 加上相对定位即可。</p>
+      <p><strong>5. 第三部分画图：</strong>手绘父级 <code>relative</code> 和子级 <code>absolute</code> 盒子，再截图粘贴到作业中。</p>
+    </section>
+
+    <section aria-labelledby="part-four">
+      <h2 id="part-four">第四部分：回到顶部（选做）</h2>
+      <p>使用 <code>href="#top"</code> 的锚点返回页面顶部，不需要 JavaScript。按钮使用 <code>position: fixed</code> 固定在左下角，并通过 <code>opacity</code> 和 <code>transform</code> 设置悬浮效果。</p>
+    </section>
+  </main>
+
+  <a class="back-top" href="#top" aria-label="回到顶部">↑</a>
+</body>
+</html>
